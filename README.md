@@ -1,0 +1,73 @@
+I have created a Docker image of the Node application and pushed it to
+the Docker Hub.
+
+docker tag node-app haiderali956/node-image:v1.0
+
+docker push haiderali956/node-image:v1.0
+
+C:\\Users\\HP\\Desktop\\sample-node-app\>minikube start W1124
+17:30:11.193373 21676 main.go:291\] Unable to resolve the current Docker
+CLI context \"default\": context \"default\": context not found: open
+C:\\Users\\HP\\.docker\\contexts\\meta\\37a8eec1ce19687d132fe29051dca629d164e2c4958ba141d5f4133a33f0688f\\meta.json:
+The system cannot find the path specified. \* minikube v1.32.0 on
+Microsoft Windows 11 Home Single Language 10.0.22621.2715 Build
+22621.2715 \* Automatically selected the docker driver \* Using Docker
+Desktop driver with root privileges \* Starting control plane node
+minikube in cluster minikube \* Pulling base image \... \* Downloading
+Kubernetes v1.28.3 preload \... \> preloaded-images-k8s-v18-v1\...:
+403.35 MiB / 403.35 MiB 100.00% 439.07 \>
+gcr.io/k8s-minikube/kicbase\...: 453.90 MiB / 453.90 MiB 100.00% 435.48
+\* Creating docker container (CPUs=2, Memory=4000MB) \... \* Preparing
+Kubernetes v1.28.3 on Docker 24.0.7 \...  - Generating certificates and
+keys \...  - Booting up control plane \...  - Configuring RBAC rules
+\... \* Configuring bridge CNI (Container Networking Interface) \... \*
+Verifying Kubernetes components\...  - Using image
+gcr.io/k8s-minikube/storage-provisioner:v5 \* Enabled addons:
+storage-provisioner, default-storageclass \* Done! kubectl is now
+configured to use \"minikube\" cluster and \"default\" namespace by
+default
+
+C:\\Users\\HP\\Desktop\\sample-node-app\>minikube status W1124
+17:52:11.157098 16624 main.go:291\] Unable to resolve the current Docker
+CLI context \"default\": context \"default\": context not found: open
+C:\\Users\\HP\\.docker\\contexts\\meta\\37a8eec1ce19687d132fe29051dca629d164e2c4958ba141d5f4133a33f0688f\\meta.json:
+The system cannot find the path specified. minikube type: Control Plane
+host: Running kubelet: Running apiserver: Running kubeconfig: Configured
+
+C:\\Users\\HP\\Desktop\\sample-node-app\>kubectl get nodes NAME STATUS
+ROLES AGE VERSION minikube Ready control-plane 2m9s v1.28.3
+
+C:\\Users\\HP\\Desktop\\sample-node-app\>kubectl apply -f
+node-deployment.yaml deployment.apps/sample-node-app created
+
+C:\\Users\\HP\\Desktop\\sample-node-app\>kubectl apply -f
+node-service.yaml service/node-service created
+
+C:\\Users\\HP\\Desktop\\sample-node-app\>kubectl get deployments NAME
+READY UP-TO-DATE AVAILABLE AGE sample-node-app 1/1 1 1 21s
+
+C:\\Users\\HP\\Desktop\\sample-node-app\>kubectl get pods NAME READY
+STATUS RESTARTS AGE sample-node-app-7d8d5599cf-ns47r 1/1 Running 0 25s
+
+\-\-\--Service created as LoadBalancer
+
+C:\\Users\\HP\\Desktop\\sample-node-app\>kubectl get services NAME TYPE
+CLUSTER-IP EXTERNAL-IP PORT(S) AGE kubernetes ClusterIP 10.96.0.1
+\<none\> 443/TCP 5h23m node-service LoadBalancer 10.106.201.225
+\<pending\> 80:31989/TCP 12s
+
+\-\--Service created as ClusterIP
+
+C:\\Users\\HP\\Desktop\\sample-node-app\>kubectl get services NAME TYPE
+CLUSTER-IP EXTERNAL-IP PORT(S) AGE kubernetes ClusterIP 10.96.0.1
+\<none\> 443/TCP 5h47m node-service LoadBalancer 10.106.201.225
+\<pending\> 80:31989/TCP 24m node-service-cluster ClusterIP
+10.110.115.99 \<none\> 80/TCP 6s
+
+\-\--Service created as NodePort
+C:\\Users\\HP\\Desktop\\sample-node-app\>kubectl get services NAME TYPE
+CLUSTER-IP EXTERNAL-IP PORT(S) AGE kubernetes ClusterIP 10.96.0.1
+\<none\> 443/TCP 5h53m node-service LoadBalancer 10.106.201.225
+\<pending\> 80:31989/TCP 30m node-service-cluster ClusterIP
+10.110.115.99 \<none\> 80/TCP 5m52s node-service-nodep NodePort
+10.110.146.181 \<none\> 80:30080/TCP 5s
